@@ -38,8 +38,8 @@ class KSamplerAdvancedConfig:
             },
         }
 
-    RETURN_TYPES = (comfy.samplers.KSampler.SAMPLERS, comfy.samplers.KSampler.SCHEDULERS, "INT", "INT", "INT", "FLOAT")
-    RETURN_NAMES = ("sampler", "scheduler", "steps", "steps_start", "steps_end", "cfg")
+    RETURN_TYPES = ("INT", "FLOAT", comfy.samplers.KSampler.SAMPLERS, comfy.samplers.KSampler.SCHEDULERS, "INT",  "INT")
+    RETURN_NAMES = ("steps", "cfg", "sampler", "scheduler",  "steps_start", "steps_end")
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
