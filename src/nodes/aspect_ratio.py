@@ -1,6 +1,6 @@
+from inspect import cleandoc
 import torch
 import PIL.Image as Image
-from inspect import cleandoc
 from utils.utils import validateDim
 
 ASPECT_CHOICES = [
@@ -18,11 +18,11 @@ ASPECT_CHOICES = [
 ]
 
 class AspectRatioCalculator:
-    """ Use aspect ratio from preset or image, then calculate width and height with a base dimension"""
+    """ Use aspect ratio from preset or image, then calculate width and height with a base dimension """
     def __init__(self):
         pass
 
-    NODE_NAME = "Aspect Ratio Calculator"
+    NAME = "Aspect Ratio Calculator"
     CATEGORY = "NyakoTech"
 
     @classmethod
