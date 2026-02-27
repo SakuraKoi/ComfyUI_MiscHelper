@@ -80,8 +80,8 @@ class KSamplerConfigExtract:
             },
         }
 
-    RETURN_TYPES = ("INT", "FLOAT", comfy.samplers.KSampler.SAMPLERS, comfy.samplers.KSampler.SCHEDULERS, "INT",  "INT")
-    RETURN_NAMES = ("steps", "cfg", "sampler", "scheduler", "steps_start", "steps_end")
+    RETURN_TYPES = ("INT", "FLOAT", comfy.samplers.KSampler.SAMPLERS, comfy.samplers.KSampler.SCHEDULERS, "INT",  "INT", "FLOAT")
+    RETURN_NAMES = ("steps", "cfg", "sampler", "scheduler", "steps_start", "steps_end", "denoise")
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
