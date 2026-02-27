@@ -1,40 +1,30 @@
 from inspect import cleandoc
 import torch
 import PIL.Image as Image
+from misc_helper import getNodeCategory
+from misc_helper.constants import ASPECT_CHOICES
 from misc_helper.utils.utils import validateDim
 
-ASPECT_CHOICES = [
-    ("From image",      (0, 0)),
-    # Standard
-    ("1:1",             (1, 1)),    # 1
-    ("5:4",             (5, 4)),    # 0.8
-    ("4:3",             (4, 3)),    # 0.75
-    ("7:5",             (7, 5)),    # 0.7142
-    ("3:2",             (3, 2)),    # 0.67
-    ("16:9",            (16, 9)),   # 0.5625
-    ("21:9",            (21, 9)),   # 0.4286
-    # Custom
-    ("91:64 Postcard",  (91, 64)),  # 0.7033
-]
 
 class AspectRatioCalculator:
     """ Use aspect ratio from preset or image, then calculate width and height with a base dimension """
+
     def __init__(self):
         pass
 
     NAME = "Aspect Ratio Calculator"
-    CATEGORY = "NyakoTech"
+    CATEGORY = getNodeCategory("latent")
 
     @classmethod
     def INPUT_TYPES(s):
         return {
             "optional": {
-                "image": ("Image", { 
+                "image": ("Image", {
                     "tooltip": "Extract aspect-ratio from this image"
                 }),
             },
             "required": {
-                "aspect_ratio": ([lbl for lbl,_ in ASPECT_CHOICES], {
+                "aspect_ratio": ([lbl for lbl, _ in ASPECT_CHOICES], {
                     "default": "4:3"
                 }),
                 "swap_orient": ("BOOLEAN", {
@@ -45,13 +35,13 @@ class AspectRatioCalculator:
                     "min": 128,
                     "max": 8192,
                     "step": 64,
-                    "display": "number" 
+                    "display": "number"
                 }),
                 "reference_dim": (["Width", "Height"], {
                     "default": "Height"
                 }),
                 "batch_size":   ("INT",    {
-                    "default": 0,   
+                    "default": 0,
                     "min": 0
                 }),
             },
@@ -62,14 +52,13 @@ class AspectRatioCalculator:
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
-
     def handle(self, image, aspect_ratio: str, swap_orient: bool, dimension_px: int, reference_dim: str, batch_size: int):
         validateDim(dimension_px)
 
         ratio_map = dict(ASPECT_CHOICES)
         if aspect_ratio not in ratio_map:
             raise ValueError(f"Unknown aspect ratio: {aspect_ratio}")
-        
+
         wr, hr = ratio_map[aspect_ratio]
 
         if wr == 0 and hr == 0:  # calculate from input Image
@@ -92,8 +81,9 @@ class AspectRatioCalculator:
         validateDim(w)
         validateDim(h)
         if batch_size > 0:
-            latent = {"samples": torch.zeros([batch_size, 4, h, w], dtype=torch.float32)}
+            latent = {"samples": torch.zeros(
+                [batch_size, 4, h, w], dtype=torch.float32)}
         else:
             latent = None
-            
+
         return (latent, w, h)

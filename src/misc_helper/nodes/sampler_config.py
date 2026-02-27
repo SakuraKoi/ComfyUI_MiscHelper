@@ -2,6 +2,8 @@ from inspect import cleandoc
 from nodes import MAX_RESOLUTION
 import comfy.samplers
 import math
+from misc_helper import getNodeCategory
+
 
 class PackedConfig:
     def __init__(self, steps, cfg, sampler, scheduler,  steps_start, steps_end):
@@ -12,13 +14,15 @@ class PackedConfig:
         self.steps_start = steps_start
         self.steps_end = steps_end
 
+
 class KSamplerAdvancedConfig:
     """ Calculate value for KSamplerAdvanced """
+
     def __init__(self):
         pass
 
     NAME = "KSampler Config"
-    CATEGORY = "NyakoTech"
+    CATEGORY = getNodeCategory("sampling")
 
     @classmethod
     def INPUT_TYPES(s):
@@ -52,18 +56,21 @@ class KSamplerAdvancedConfig:
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
-    def handle(self, sampler, scheduler , steps, cfg, denoise):
+    def handle(self, sampler, scheduler, steps, cfg, denoise):
         steps_start = math.floor(steps * (1 - denoise))
-        packed_config = PackedConfig(sampler=sampler, scheduler=scheduler, steps=steps, steps_start=steps_start, steps_end=MAX_RESOLUTION, cfg=cfg)
+        packed_config = PackedConfig(sampler=sampler, scheduler=scheduler,
+                                     steps=steps, steps_start=steps_start, steps_end=MAX_RESOLUTION, cfg=cfg)
         return (packed_config, )
+
 
 class KSamplerConfigExtract:
     """ Extract value from PacketConfig, to feed into KSamplerAdvanced """
+
     def __init__(self):
         pass
 
     NAME = "KSampler Config Extract"
-    CATEGORY = "NyakoTech"
+    CATEGORY = getNodeCategory("sampling")
 
     @classmethod
     def INPUT_TYPES(s):
@@ -73,8 +80,10 @@ class KSamplerConfigExtract:
             },
         }
 
-    RETURN_TYPES = ("INT", "FLOAT", comfy.samplers.KSampler.SAMPLERS, comfy.samplers.KSampler.SCHEDULERS, "INT",  "INT")
-    RETURN_NAMES = ("steps", "cfg", "sampler", "scheduler",  "steps_start", "steps_end")
+    RETURN_TYPES = ("INT", "FLOAT", comfy.samplers.KSampler.SAMPLERS,
+                    comfy.samplers.KSampler.SCHEDULERS, "INT",  "INT")
+    RETURN_NAMES = ("steps", "cfg", "sampler", "scheduler",
+                    "steps_start", "steps_end")
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
