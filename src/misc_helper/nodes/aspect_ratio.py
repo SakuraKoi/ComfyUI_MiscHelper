@@ -34,7 +34,9 @@ class AspectRatioCalculator:
                 }),
             },
             "required": {
-                "aspect_ratio": ([lbl for lbl,_ in ASPECT_CHOICES],),
+                "aspect_ratio": ([lbl for lbl,_ in ASPECT_CHOICES], {
+                    "default": "4:3"
+                }),
                 "swap_orient": ("BOOLEAN", {
                     "default": False
                 }),
