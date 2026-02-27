@@ -36,7 +36,7 @@ class AspectRatioCalculator:
             "required": {
                 "aspect_ratio": ([lbl for lbl,_ in ASPECT_CHOICES],),
                 "swap_orient": ("BOOLEAN", {
-                    "default": True
+                    "default": False
                 }),
                 "dimension_px": ("INT", {
                     "default": 512,
