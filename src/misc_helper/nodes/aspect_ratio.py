@@ -62,10 +62,15 @@ class AspectRatioCalculator:
         wr, hr = ratio_map[aspect_ratio]
 
         if wr == 0 and hr == 0:  # calculate from input Image
+            if image == None:
+                raise ValueError(f"Unable parse aspect ratio, image was not fed")
+            
             if isinstance(image, Image.Image):
                 wr, hr = image.size()
             elif isinstance(image, torch.Tensor):
                 wr, hr = image.shape[2], image.shape[1]
+            else
+                raise ValueError(f"Unknown image type fed into: {image}")
 
         if swap_orient:
             wr, hr = hr, wr
