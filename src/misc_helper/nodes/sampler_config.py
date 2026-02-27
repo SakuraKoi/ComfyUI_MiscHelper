@@ -3,6 +3,15 @@ from nodes import MAX_RESOLUTION
 import comfy.samplers
 import math
 
+class PackedConfig:
+    def __init__(self, steps, cfg, sampler, scheduler,  steps_start, steps_end):
+        self.steps = steps
+        self.cfg = cfg
+        self.sampler = sampler
+        self.scheduler = scheduler
+        self.steps_start = steps_start
+        self.steps_end = steps_end
+
 class KSamplerAdvancedConfig:
     """ Calculate value for KSamplerAdvanced """
     def __init__(self):
@@ -38,12 +47,36 @@ class KSamplerAdvancedConfig:
             },
         }
 
+    RETURN_TYPES = ("PACKED_CONFIG", )
+    RETURN_NAMES = ("packed_config", )
+    DESCRIPTION = cleandoc(__doc__)
+    FUNCTION = "handle"
+
+    def handle(self, sampler, scheduler , steps, cfg, denoise):
+        steps_start = math.floor(steps * (1 - denoise))
+        packed_config = PackedConfig(sampler=sampler, scheduler=scheduler, steps=steps, steps_start=steps_start, steps_end=MAX_RESOLUTION, cfg=cfg)
+        return (packed_config, )
+
+class KSamplerConfigExtract:
+    """ Extract value from PacketConfig, to feed into KSamplerAdvanced """
+    def __init__(self):
+        pass
+
+    NAME = "KSampler Config Extract"
+    CATEGORY = "NyakoTech"
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "packed_config": ("PACKED_CONFIG", ),
+            },
+        }
+
     RETURN_TYPES = ("INT", "FLOAT", comfy.samplers.KSampler.SAMPLERS, comfy.samplers.KSampler.SCHEDULERS, "INT",  "INT")
     RETURN_NAMES = ("steps", "cfg", "sampler", "scheduler",  "steps_start", "steps_end")
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
-
-    def handle(self, sampler, scheduler , steps, cfg, denoise):
-        steps_start = math.floor(steps * (1 - denoise))
-        return (sampler, scheduler, steps, steps_start, MAX_RESOLUTION, cfg)
+    def handle(self, packed_config):
+        return (packed_config.sampler, packed_config.scheduler, packed_config.steps, packed_config.steps_start, packed_config.steps_end, packed_config.cfg)
