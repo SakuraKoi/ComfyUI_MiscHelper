@@ -47,17 +47,21 @@ class AspectRatioCalculator:
                 }),
                 "reference_dim": (["Width", "Height"], {
                     "default": "Height"
-                })
+                }),
+                "batch_size":   ("INT",    {
+                    "default": 0,   
+                    "min": 0
+                }),
             },
         }
 
-    RETURN_TYPES = ("INT", "INT")
-    RETURN_NAMES = ("width", "height")
+    RETURN_TYPES = ("LATENT", "INT", "INT")
+    RETURN_NAMES = ("latent", "width", "height")
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
 
-    def handle(self, image, aspect_ratio, swap_orient, dimension_px, reference_dim):
+    def handle(self, image, aspect_ratio: str, swap_orient: bool, dimension_px: int, reference_dim: str, batch_size: int):
         validateDim(dimension_px)
 
         ratio_map = dict(ASPECT_CHOICES)
@@ -80,10 +84,14 @@ class AspectRatioCalculator:
         else:
             h, w = dimension_px, round(dimension_px * wr / hr)
 
-        h = round(h / 8) * 8
-        w = round(w / 8) * 8
+        h = h // 8
+        w = w // 8
 
         validateDim(w)
         validateDim(h)
-
-        return (w, h)
+        if batch_size > 0:
+            latent = {"samples": torch.zeros([batch_size, 4, h, w], dtype=torch.float32)}
+        else:
+            latent = None
+            
+        return (latent, w, h)
