@@ -86,4 +86,4 @@ class KSamplerConfigExtract:
     FUNCTION = "handle"
 
     def handle(self, packed_config):
-        return (packed_config.sampler, packed_config.scheduler, packed_config.steps, packed_config.steps_start, packed_config.steps_end, packed_config.cfg, packed_config.denoise)
+        return (packed_config.steps, packed_config.cfg, packed_config.sampler, packed_config.scheduler, packed_config.steps_start, packed_config.steps_end, packed_config.denoise)
