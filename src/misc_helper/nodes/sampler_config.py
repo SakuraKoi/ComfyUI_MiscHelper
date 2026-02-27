@@ -2,7 +2,7 @@ from inspect import cleandoc
 from nodes import MAX_RESOLUTION
 import comfy.samplers
 import math
-from misc_helper import getNodeCategory
+from misc_helper.utils.utils import getNodeCategory
 
 
 class PackedConfig:

@@ -1,13 +1,6 @@
 from misc_helper.nodes.sampler_config import KSamplerAdvancedConfig, KSamplerConfigExtract
 from misc_helper.nodes.aspect_ratio import AspectRatioCalculator
-
-
-def mapNodeClass(name):
-    return "nyakotech:{}".format(name.lower().replace(" ", "_"))
-
-
-def getNodeCategory(category):
-    return "NyakoTech/{}".format(category)
+from misc_helper.utils.utils import mapNodeClass
 
 
 NODE_CLASS_MAPPINGS = {

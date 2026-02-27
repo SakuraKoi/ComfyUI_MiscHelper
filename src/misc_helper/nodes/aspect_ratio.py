@@ -1,7 +1,7 @@
 from inspect import cleandoc
 import torch
 import PIL.Image as Image
-from misc_helper import getNodeCategory
+from misc_helper.utils.utils import getNodeCategory
 from misc_helper.constants import ASPECT_CHOICES
 from misc_helper.utils.utils import validateDim
 
