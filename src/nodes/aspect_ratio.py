@@ -22,6 +22,9 @@ class AspectRatioCalculator:
     def __init__(self):
         pass
 
+    NODE_NAME = "Aspect Ratio Calculator"
+    CATEGORY = "NyakoTech"
+
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -48,13 +51,11 @@ class AspectRatioCalculator:
             },
         }
 
-    NODE_NAME = "Aspect Ratio Calculator"
     RETURN_TYPES = ("INT", "INT")
     RETURN_NAMES = ("width", "height")
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
-    CATEGORY = "NyakoTech"
 
     def handle(self, image, aspect_ratio, swap_orient, dimension_px, reference_dim):
         validateDim(dimension_px)
