@@ -6,13 +6,14 @@ from misc_helper.utils.utils import getNodeCategory
 
 
 class PackedConfig:
-    def __init__(self, steps, cfg, sampler, scheduler,  steps_start, steps_end):
+    def __init__(self, steps, cfg, sampler, scheduler,  steps_start, steps_end, denoise):
         self.steps = steps
         self.cfg = cfg
         self.sampler = sampler
         self.scheduler = scheduler
         self.steps_start = steps_start
         self.steps_end = steps_end
+        self.denoise = denoise
 
 
 class KSamplerAdvancedConfig:
@@ -59,7 +60,7 @@ class KSamplerAdvancedConfig:
     def handle(self, sampler, scheduler, steps, cfg, denoise):
         steps_start = math.floor(steps * (1 - denoise))
         packed_config = PackedConfig(sampler=sampler, scheduler=scheduler,
-                                     steps=steps, steps_start=steps_start, steps_end=MAX_RESOLUTION, cfg=cfg)
+                                     steps=steps, steps_start=steps_start, steps_end=MAX_RESOLUTION, cfg=cfg, denoise=denoise)
         return (packed_config, )
 
 
@@ -88,4 +89,4 @@ class KSamplerConfigExtract:
     FUNCTION = "handle"
 
     def handle(self, packed_config):
-        return (packed_config.sampler, packed_config.scheduler, packed_config.steps, packed_config.steps_start, packed_config.steps_end, packed_config.cfg)
+        return (packed_config.sampler, packed_config.scheduler, packed_config.steps, packed_config.steps_start, packed_config.steps_end, packed_config.cfg, packed_config.denoise)
