@@ -59,8 +59,7 @@ class KSamplerAdvancedConfig:
 
     def handle(self, sampler, scheduler, steps, cfg, denoise):
         steps_start = math.floor(steps * (1 - denoise))
-        packed_config = PackedConfig(sampler=sampler, scheduler=scheduler,
-                                     steps=steps, steps_start=steps_start, steps_end=MAX_RESOLUTION, cfg=cfg, denoise=denoise)
+        packed_config = PackedConfig(sampler=sampler, scheduler=scheduler, steps=steps, steps_start=steps_start, steps_end=MAX_RESOLUTION, cfg=cfg, denoise=denoise)
         return (packed_config, )
 
 
@@ -81,10 +80,8 @@ class KSamplerConfigExtract:
             },
         }
 
-    RETURN_TYPES = ("INT", "FLOAT", comfy.samplers.KSampler.SAMPLERS,
-                    comfy.samplers.KSampler.SCHEDULERS, "INT",  "INT")
-    RETURN_NAMES = ("steps", "cfg", "sampler", "scheduler",
-                    "steps_start", "steps_end")
+    RETURN_TYPES = ("INT", "FLOAT", comfy.samplers.KSampler.SAMPLERS, comfy.samplers.KSampler.SCHEDULERS, "INT",  "INT")
+    RETURN_NAMES = ("steps", "cfg", "sampler", "scheduler", "steps_start", "steps_end")
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 

@@ -63,8 +63,8 @@ class AspectRatioCalculator:
 
         if wr == 0 and hr == 0:  # calculate from input Image
             if image == None:
-                raise ValueError(f"Unable parse aspect ratio, image was not fed")
-            
+                raise ValueError("Unable parse aspect ratio, image was not fed")
+
             if isinstance(image, Image.Image):
                 wr, hr = image.size()
             elif isinstance(image, torch.Tensor):
@@ -86,8 +86,7 @@ class AspectRatioCalculator:
         validateDim(w)
         validateDim(h)
         if batch_size > 0:
-            latent = {"samples": torch.zeros(
-                [batch_size, 4, h, w], dtype=torch.float32)}
+            latent = {"samples": torch.zeros([batch_size, 4, h, w], dtype=torch.float32)}
         else:
             latent = None
 
