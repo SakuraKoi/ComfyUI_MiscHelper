@@ -1,7 +1,7 @@
 from inspect import cleandoc
 import torch
 import PIL.Image as Image
-from utils.utils import validateDim
+from misc_helper.utils.utils import validateDim
 
 ASPECT_CHOICES = [
     ("From image",      (0, 0)),
