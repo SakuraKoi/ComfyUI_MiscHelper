@@ -19,7 +19,7 @@ class AspectRatioCalculator:
     def INPUT_TYPES(s):
         return {
             "optional": {
-                "image": ("Image", {
+                "image": ("IMAGE", {
                     "tooltip": "Extract aspect-ratio from this image"
                 }),
             },
