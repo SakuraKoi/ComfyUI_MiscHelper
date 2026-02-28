@@ -17,12 +17,12 @@ class PromptPreprocessor:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "prompt_text": ("STRING", ),
+                "prompt_text": ("STRING", {"forceInput": True} ),
             },
         }
 
-    RETURN_TYPES = ("STRING")
-    RETURN_NAMES = ("prompt_text")
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("prompt_text",)
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
