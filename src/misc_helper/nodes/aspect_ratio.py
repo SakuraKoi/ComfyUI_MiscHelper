@@ -93,4 +93,4 @@ class AspectRatioCalculator:
         else:
             samples = None
 
-        return (samples, w, h)
+        return (samples, w, h, )

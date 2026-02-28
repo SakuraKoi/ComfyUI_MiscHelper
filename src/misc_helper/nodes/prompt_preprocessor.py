@@ -27,9 +27,9 @@ class PromptPreprocessor:
     FUNCTION = "handle"
 
     def handle(self, prompt_text):
-        prompt_text = prompt_text.strip()
-        prompt_text = prompt_text.replace('\n', ' ').replace('\r', ' ')
-        prompt_text = prompt_text.replace(',', ', ').replace("\, ", "\,")
-        prompt_text = prompt_text.rstrip(', ')
-        prompt_text = ' '.join(prompt_text.split())
-        return (prompt_text)
+        out = prompt_text.strip()
+        out = out.replace('\n', ' ').replace('\r', ' ')
+        out = out.replace(',', ', ').replace("\, ", "\,")
+        out = out.rstrip(', ')
+        out = ' '.join(out.split())
+        return (out, )
