@@ -1,6 +1,8 @@
 from inspect import cleandoc
+from turtle import width
 import torch
 import PIL.Image as Image
+import comfy.model_management
 from misc_helper.utils.utils import getNodeCategory
 from misc_helper.constants import ASPECT_CHOICES
 from misc_helper.utils.utils import validateDim
@@ -10,7 +12,7 @@ class AspectRatioCalculator:
     """ Use aspect ratio from preset or image, then calculate width and height with a base dimension """
 
     def __init__(self):
-        pass
+        self.device = comfy.model_management.intermediate_device()
 
     NAME = "Aspect Ratio Calculator"
     CATEGORY = getNodeCategory("latent")
@@ -86,8 +88,9 @@ class AspectRatioCalculator:
         validateDim(w)
         validateDim(h)
         if batch_size > 0:
-            latent = {"samples": torch.zeros([batch_size, 4, h, w], dtype=torch.float32)}
+            latent = torch.zeros([batch_size, 4, h // 8, w // 8], device=self.device)
+            samples = {"samples": latent, "downscale_ratio_spacial": 8}
         else:
-            latent = None
+            samples = None
 
-        return (latent, w, h)
+        return (samples, w, h)
