@@ -80,8 +80,8 @@ class AspectRatioCalculator:
         else:
             h, w = dimension_px, round(dimension_px * wr / hr)
 
-        h = h // 8
-        w = w // 8
+        h = h // 8 * 8
+        w = w // 8 * 8
 
         validateDim(w)
         validateDim(h)
