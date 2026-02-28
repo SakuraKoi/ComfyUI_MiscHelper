@@ -18,11 +18,6 @@ class AspectRatioCalculator:
     @classmethod
     def INPUT_TYPES(s):
         return {
-            "optional": {
-                "image": ("IMAGE", {
-                    "tooltip": "Extract aspect-ratio from this image"
-                }),
-            },
             "required": {
                 "aspect_ratio": ([lbl for lbl, _ in ASPECT_CHOICES], {
                     "default": "4:3"
@@ -45,6 +40,11 @@ class AspectRatioCalculator:
                     "min": 0
                 }),
             },
+            "optional": {
+                "image": ("IMAGE", {
+                    "tooltip": "Extract aspect-ratio from this image"
+                }),
+            },
         }
 
     RETURN_TYPES = ("LATENT", "INT", "INT")
@@ -52,7 +52,7 @@ class AspectRatioCalculator:
     DESCRIPTION = cleandoc(__doc__)
     FUNCTION = "handle"
 
-    def handle(self, image, aspect_ratio: str, swap_orient: bool, dimension_px: int, reference_dim: str, batch_size: int):
+    def handle(self, aspect_ratio: str, swap_orient: bool, dimension_px: int, reference_dim: str, batch_size: int, image=None):
         validateDim(dimension_px)
 
         ratio_map = dict(ASPECT_CHOICES)
