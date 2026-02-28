@@ -30,6 +30,6 @@ class PromptPreprocessor:
         prompt_text = prompt_text.strip()
         prompt_text = prompt_text.replace('\n', ' ').replace('\r', ' ')
         prompt_text = prompt_text.replace(',', ', ')
-        prompt_text = ' '.join(prompt_text.split())
         prompt_text = prompt_text.rstrip(', ')
+        prompt_text = ' '.join(prompt_text.split())
         return (prompt_text)
