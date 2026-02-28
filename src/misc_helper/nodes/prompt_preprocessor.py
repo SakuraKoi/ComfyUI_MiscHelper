@@ -5,12 +5,12 @@ from misc_helper.utils.utils import getNodeCategory
 
 
 class PromptPreprocessor:
-    """ Cleanup prompt text, remove extra spaces, newlines, etc. """
+    """ Cleanup tag based prompt text, remove extra spaces, newlines, etc. """
 
     def __init__(self):
         pass
 
-    NAME = "Prompt Preprocessor"
+    NAME = "Tag Prompt Preprocessor"
     CATEGORY = getNodeCategory("prompt")
 
     @classmethod
