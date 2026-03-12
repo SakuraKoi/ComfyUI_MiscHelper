@@ -58,8 +58,11 @@ class KSamplerAdvancedConfig:
     FUNCTION = "handle"
 
     def handle(self, sampler, scheduler, steps, cfg, denoise):
-        steps_start = math.floor(steps * (1 - denoise))
-        packed_config = PackedConfig(sampler=sampler, scheduler=scheduler, steps=steps, steps_start=steps_start, steps_end=MAX_RESOLUTION, cfg=cfg, denoise=denoise)
+        steps_out = math.floor(steps / max(0.0, min(1.0, denoise)))
+        steps_start = steps_out - steps
+        steps_end = steps_out
+
+        packed_config = PackedConfig(sampler=sampler, scheduler=scheduler, steps=steps_out, steps_start=steps_start, steps_end=steps_end, cfg=cfg, denoise=denoise)
         return (packed_config, )
 
 
