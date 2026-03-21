@@ -5,6 +5,7 @@ import math
 from misc_helper.utils.utils import getNodeCategory
 
 
+# Helper type to pack 7 output into 1, make KSamplerAdvancedConfig ui compat and take less space in graph
 class PackedConfig:
     def __init__(self, steps, cfg, sampler, scheduler,  steps_start, steps_end, denoise):
         self.steps = steps
@@ -67,7 +68,7 @@ class KSamplerAdvancedConfig:
 
 
 class KSamplerConfigExtract:
-    """ Extract value from PacketConfig, to feed into KSamplerAdvanced """
+    """ Extract value from PackedConfig, to feed into KSamplerAdvanced """
 
     def __init__(self):
         pass
